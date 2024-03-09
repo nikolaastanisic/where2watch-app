@@ -1,0 +1,111 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@700&display=swap");
+
+//// HEADER ////
+.logo {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+h1 {
+  font-size: 60px;
+  padding: 0;
+  margin: 0;
+  color: #3a5a40;
+  font-weight: 700;
+  font-family: "Josefin Sans", sans-serif;
+  height: 60px;
+}
+.slogan {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  color: #1d3557;
+  font-weight: 500;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 25px;
+  gap: 4px;
+}
+.diff {
+  color: #3a5a40;
+  font-weight: 700;
+}
+nav {
+  width: 50%;
+  color: #3a5a40;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 20px;
+  justify-content: space-around;
+  a:-webkit-any-link {
+    display: flex;
+    justify-content: center;
+  }
+  .menu:focus {
+    background-color: green;
+  }
+  a:hover {
+    transition: border-radius, color, background-color 0.7s ease;
+    background-color: #3a5a40c8;
+    color: #edede9;
+    border-radius: 7px 4px;
+  }
+}
+
+.header {
+  width: 100%;
+  margin: 0;
+  position: sticky;
+  top: 0;
+}
+.header-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  padding-top: 5px;
+  background-color: #e2dfd9;
+}
+
+.sign {
+  display: flex;
+  width: 20%;
+  align-items: center;
+  justify-content: flex-end;
+  img {
+    width: 25px;
+    height: 25px;
+  }
+}
+.sign-button {
+  font-family: "Josefin Sans";
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #3a5a40;
+  padding-top: 7px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 2.5px;
+}
+.sign-button:hover {
+  background-color: #3a5a40;
+  color: #edede9;
+  transition: color, background-color 0.7s ease;
+}
+a {
+  text-decoration: unset;
+  color: unset;
+  display: flex;
+  width: 22%;
+  justify-content: center;
+  align-self: center;
+  padding: 10px;
+}
+#nav a.active {
+  background-color: #3a5a40bd;
+  color: #edede9;
+  border-radius: 7px 4px;
+}
