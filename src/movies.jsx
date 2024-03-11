@@ -7,7 +7,9 @@ const Movies = () => {
  const [defaultMovies, setDefaultMovies] = useState([]);
  const [searchMovies, setSearchMovies] = useState([]);
  const [searchTerm, setSearchTerm] = useState('');
- const [genres, setGenres] = useState([]); 
+ const [genres, setGenres] = useState([]);
+ const [watchProviders, setWatchProviders] = useState({}); 
+ const [providersList, setProvidersList] = useState({}); 
 
  useEffect(() => {
     fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=3ebdcea237cba8f1759952fa1674302f&language=en-US`)
@@ -29,12 +31,37 @@ const Movies = () => {
     }
  }, [searchTerm]);
 
+ useEffect(() => {
+    fetch(`https://api.themoviedb.org/3/watch/providers/movie?api_key=3ebdcea237cba8f1759952fa1674302f`)
+      .then(res => res.json())
+      .then(json => {
+        const providers = json.results;
+        const providersList = providers.reduce((acc, curr) => ({ ...acc, [curr.id]: curr.name }), {});
+        setProvidersList(providersList);
+      });
+ }, []);
+
+ const fetchWatchProviders = (movieId) => {
+  fetch(`https://api.themoviedb.org/3/movie/${movieId}/watch/providers?api_key=3ebdcea237cba8f1759952fa1674302f`)
+     .then(res => res.json())
+     .then(json => {
+       const providers = { [movieId]: json.results.US };
+       setWatchProviders(prevProviders => ({ ...prevProviders, ...providers }));
+     });
+ };
+
  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
  };
 
  const getGenreNames = (movie) => {
     return movie.genre_ids.map(id => genres.find(genre => genre.id === id).name).join(', ');
+ };
+
+ const getProviderNames = (movieId) => {
+    const providers = watchProviders[movieId] || {};
+    console.log('Providers for movieId', movieId, ':', providers); // Debugging line
+    return Object.values(providers).map(providerId => providersList[providerId]).join(', ');
  };
 
  return (
@@ -44,6 +71,7 @@ const Movies = () => {
         <div className='movies-header'>
           <h1>Movies</h1>
           <p>Find your desired movie here!</p>
+          <div className="search-container">
           <label>
             <input
               type="text"
@@ -52,6 +80,7 @@ const Movies = () => {
               onChange={handleSearchChange}
             />
           </label>
+          </div>
         </div>
         <hr></hr>
         <div className='movies-list'>
@@ -61,7 +90,9 @@ const Movies = () => {
               <h2>{movie.title}</h2>
               <p>Release Date: {movie.release_date.replace(/-/g, '.')}</p>
               <p>Rating : {movie.vote_average}</p>
-              <p>Genres: {getGenreNames(movie)}</p> 
+              <p>Genres: {getGenreNames(movie)}</p>
+              <button onClick={() => fetchWatchProviders(movie.id)}>Watch it here</button>  
+              <p>Available on: {getProviderNames(movie.id)}</p>           
             </div>
           )) : defaultMovies.map((movie) => (
             <div className='card' key={movie.id}>
@@ -69,8 +100,9 @@ const Movies = () => {
               <h2>{movie.title}</h2>
               <p>Release Date: {movie.release_date.replace(/-/g, '.')}</p>
               <p>Rating : {movie.vote_average}</p>
-              <p>Genres: {getGenreNames(movie)}</p> 
-            </div>
+              <p>Genres: {getGenreNames(movie)}</p>
+              <button onClick={() => fetchWatchProviders(movie.id)}>Watch it here</button>
+              <p>Available on: {getProviderNames(movie.id)}</p>            </div>
           ))}
         </div>
       </div>
