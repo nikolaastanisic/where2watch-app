@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Header from "@components/header.jsx";
 import "@scss/account.scss";
 import { UserContext } from "./context/userContext";
 import { NavLink } from "react-router-dom";
 
 const Account = () => {
- const { user, logout } = useContext(UserContext);
+ const { user, setUser } = useContext(UserContext);
 
  return (
     <>

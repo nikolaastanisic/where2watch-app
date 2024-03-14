@@ -9,10 +9,9 @@ import { useMediaQuery } from '@mui/material';
 
 const style = {
  position: "absolute",
- top: "50%",
+ top: "30%",
  left: "40%",
  transform: "translate(-50%, -50%)",
- width: 500,
  bgcolor: "#3a5a4045",
  border: "2px solid #3a5a40",
  boxShadow: 24,
@@ -62,7 +61,7 @@ export default function WhereToWatchModal({ movie }) {
       aria-describedby="modal-modal-description"
     >
       <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-        <Box sx={style}>
+        <Box className="dialog-content" sx={style}>
           {watchProviders.length > 0 && (
             <div className={`logos ${isMobile ? 'mobile' : ''}`}>
               {watchProviders.map((provider, i) => (

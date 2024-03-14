@@ -91,7 +91,7 @@ const Movies = () => {
                   <p>Release Date: {movie.release_date.replace(/-/g, ".")}</p>
                   <p>Rating : {movie.vote_average}</p>
                   <p>Genres: {getGenreNames(movie)}</p>
-                  <p><WhereToWatchModal movie={movie} /></p>
+                  <WhereToWatchModal movie={movie} appendTo="body" />
                 </div>
               ))}
         </div>

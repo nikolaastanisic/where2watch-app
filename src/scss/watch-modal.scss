@@ -6,7 +6,7 @@
 .logos {
   display: flex;
   gap: 20px;
-  justify-content: center
+  justify-content: center;
 }
 .card {
   button {
@@ -16,14 +16,12 @@
     padding-top: 5px;
     padding-bottom: 0;
     margin-top: 20px;
-    
   }
 }
 .card {
   button:hover {
     color: #e2dfd9;
     background-color: #3a5a40;
-    
   }
 }
 .not {
@@ -31,8 +29,18 @@
 }
 .logos.mobile {
   flex-direction: column;
- }
- .no-scroll {
-  overflow: hidden; /* Prevent scrolling */
+  align-items: center;
+}
+.no-scroll {
   padding-right: 0 !important; /* Remove padding */
- }
+}
+
+.dialog-content {
+  @media (max-width: 500px) {
+    width: 100px;
+  }
+
+  @media (min-width: 500px) {
+    width: 500px;
+  }
+}

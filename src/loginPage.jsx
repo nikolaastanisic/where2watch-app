@@ -1,30 +1,36 @@
 import Password from "@components/password.jsx";
 import "@scss/SignInPage.scss";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "./context/userContext";
 
-export default function SignInPage2() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [data, setData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
 
   const getPassword = (pass) => {
-   setData({...data, password: pass})
-  }
+    setData({ ...data, password: pass });
+  };
+  const { user, setUser } = useContext(UserContext);
 
-  const registerUser = async (e) => { 
-    const { email, password} = data;
+  const registerUser = async (e) => {
+    const { email, password } = data;
     try {
-      const { data } = await axios.post("/login", { email, password});
+      const { data } = await axios.post("/login", { email, password });
       if (data.error) {
         toast.error(data.error);
       } else {
-        setData({});
+        setData({ email: "", password: "" });
         toast.success("Log in successful. Welcome!");
+        axios.get("/profile").then(({ data }) => {
+          setUser(data);
+        });
+
         navigate("/account");
       }
     } catch (error) {
@@ -55,9 +61,8 @@ export default function SignInPage2() {
               <b>Password</b>
             </label>
             <div className="input">
-              <Password getPassword={getPassword}/>
+              <Password getPassword={getPassword} />
             </div>
-            
           </div>
           <div className="buttons">
             <button className="signup" onClick={registerUser}>
